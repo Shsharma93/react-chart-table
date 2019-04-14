@@ -1,0 +1,22 @@
+$blue: rgba(54, 162, 235, 0.6);
+$red: rgba(255, 99, 132, 0.6);
+
+.buttonDraw {
+  background-color: white;
+  width: 200px;
+  cursor: pointer;
+  font-size: 24px;
+  color: black;
+  border: 2px solid $blue;
+  padding: 10px;
+  outline: none;
+  border-radius: 30px;
+  -webkit-transition-duration: 0.4s;
+  margin: 10px;
+  transition-duration: 0.4s;
+}
+
+.buttonDraw:hover {
+  background-color: $blue;
+  color: white;
+}
