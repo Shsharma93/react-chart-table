@@ -1,5 +1,4 @@
 import React from 'react';
-import classes from './RadioButton.module.scss';
 
 const radioButton = props => (
   <div style={{ display: 'inline', marginRight: '40px' }}>

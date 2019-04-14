@@ -45,20 +45,22 @@ class App extends Component {
 
   menuHandler = async (event, type) => {
     if (type === 'gender') {
-      this.setState({ genderSelection: event.target.value });
+      await this.setState({ genderSelection: event.target.value });
+      this.applyHandler();
     }
 
     if (type === 'color') {
-      this.setState({ colorSelection: event.target.value });
+      await this.setState({ colorSelection: event.target.value });
+      this.applyHandler();
     }
 
     if (type === 'fruit') {
-      this.setState({ fruitSelection: event.target.value });
+      await this.setState({ fruitSelection: event.target.value });
+      this.applyHandler();
     }
   };
 
   applyHandler = () => {
-    this.setState({ data: null });
     if (
       this.state.genderSelection !== 'select' &&
       this.state.colorSelection !== 'select' &&
@@ -169,7 +171,7 @@ class App extends Component {
   render() {
     return (
       <div className={classes.App}>
-        <div>
+        <div style={{ marginTop: '50px', marginBottom: '20px' }}>
           <SelectMenu
             changed={event => this.menuHandler(event, 'gender')}
             labels={Object.keys(listItems.gender)}
@@ -188,12 +190,6 @@ class App extends Component {
             category='Fruit'
             filter={this.state.filterFruit}
           />
-          <button
-            style={{ marginTop: '50px', marginBottom: '20px' }}
-            onClick={this.applyHandler}
-          >
-            Apply
-          </button>
         </div>
         <div>
           <Table data={this.state.data} />
