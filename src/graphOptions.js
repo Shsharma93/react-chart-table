@@ -2,11 +2,16 @@ export const options = {
   legend: {
     position: 'bottom'
   },
+  title: {
+    display: true,
+    text: 'Colors - Gender Chart',
+    fontSize: '24'
+  },
   layout: {
     padding: {
       left: 100,
       right: 100,
-      top: 70,
+      top: 40,
       bottom: 0
     }
   },

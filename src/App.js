@@ -93,7 +93,11 @@ class App extends Component {
   render() {
     return (
       <div className={classes.App}>
-        <div style={{ marginTop: '50px', marginBottom: '20px' }}>
+        <div className={classes.title}>
+          <h2>Excersie - Data Visualization by Table and Charts</h2>
+        </div>
+        <div style={{ marginTop: '70px', marginBottom: '20px' }}>
+          <h4 style={{ display: 'inline' }}>Filter Options : </h4>
           <SelectMenu
             changed={event => this.menuHandler(event, 'gender')}
             labels={Object.keys(listItems.gender)}

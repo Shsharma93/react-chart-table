@@ -12,8 +12,8 @@ let listItems = {
 
 class BarChart extends Component {
   state = {
-    colorChecked: true,
-    fruitChecked: false,
+    colorChecked: false,
+    fruitChecked: true,
     labels: null,
     males: null,
     females: null,
@@ -65,10 +65,12 @@ class BarChart extends Component {
       labels = Object.keys(listItems.color);
       colorChecked = true;
       fruitChecked = false;
+      options.title.text = 'Colors - Gender Chart';
     } else if (type === 'fruits') {
       labels = Object.keys(listItems.fruits);
       colorChecked = false;
       fruitChecked = true;
+      options.title.text = 'Fruits - Gender Chart';
     }
     await this.setState({
       colorChecked,
@@ -132,12 +134,16 @@ class BarChart extends Component {
         {
           label: 'Male',
           backgroundColor: 'rgba(54, 162, 235, 0.6)',
-          data: this.state.males
+          data: this.state.males,
+          hoverBorderWidth: 2,
+          hoverBorderColor: 'black'
         },
         {
           label: 'Female',
           backgroundColor: 'rgba(255, 99, 132, 0.6)',
-          data: this.state.females
+          data: this.state.females,
+          hoverBorderWidth: 2,
+          hoverBorderColor: 'black'
         }
       ]
     };
@@ -146,17 +152,20 @@ class BarChart extends Component {
 
   render() {
     return (
-      <div style={{ marginTop: '50px', marginBottom: '100px' }}>
+      <div style={{ marginTop: '100px', marginBottom: '30px' }}>
         <div>
-          <RadioButton
-            type={'Color Chart'}
-            checked={this.state.colorChecked}
-            click={event => this.chartHandler('color')}
-          />
+          <h4 style={{ display: 'inline', marginRight: '40px' }}>
+            Chart Options :{' '}
+          </h4>
           <RadioButton
             type={'Fruit Chart'}
             checked={this.state.fruitChecked}
             click={event => this.chartHandler('fruit')}
+          />
+          <RadioButton
+            type={'Color Chart'}
+            checked={this.state.colorChecked}
+            click={event => this.chartHandler('color')}
           />
         </div>
 
