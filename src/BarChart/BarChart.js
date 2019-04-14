@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Bar } from 'react-chartjs-3';
 import classes from './BarChart.module.scss';
-import RadioButton from './Button/RadioButton';
+import RadioButton from './RadioButton/RadioButton';
+import { options } from '../graphOptions';
 
 let listItems = {
   fruits: {},
@@ -26,45 +27,68 @@ class BarChart extends Component {
           data: []
         }
       ]
-    },
-    options: {
-      legend: {
-        position: 'bottom'
-      },
-      layout: {
-        padding: {
-          left: 100,
-          right: 100,
-          top: 70,
-          bottom: 0
-        }
-      },
-      animation: {
-        duration: 2000
-      },
-      scales: {
-        yAxes: [
-          {
-            ticks: {
-              beginAtZero: true
-            }
-          }
-        ]
-      }
     }
   };
 
+  componentDidUpdate = async (prevProps, prevState) => {
+    if (
+      prevProps.gender === this.props.gender &&
+      prevProps.color === this.props.color &&
+      prevProps.fruits === this.props.fruits
+    )
+      return;
+
+    await this.colorCheckedHandler();
+  };
+
   componentDidMount = async () => {
-    await this.chartHandler('color');
+    this.colorCheckedHandler();
+  };
+
+  colorCheckedHandler = async () => {
+    this.state.colorChecked
+      ? await this.chartHandler('color')
+      : await this.chartHandler('fruit');
+  };
+
+  clearListItemsHandler = () => {
+    listItems = {
+      fruits: {},
+      gender: {},
+      color: {}
+    };
+  };
+
+  assignGraphValueHandler = async type => {
+    let labels, colorChecked, fruitChecked;
+    if (type === 'color') {
+      labels = Object.keys(listItems.color);
+      colorChecked = true;
+      fruitChecked = false;
+    } else if (type === 'fruits') {
+      labels = Object.keys(listItems.fruits);
+      colorChecked = false;
+      fruitChecked = true;
+    }
+    await this.setState({
+      colorChecked,
+      fruitChecked,
+      labels,
+      males: listItems.gender.map(el => {
+        return el.male;
+      }),
+      females: listItems.gender.map(el => {
+        return el.female;
+      }),
+      total: listItems.gender.map(el => {
+        return el.total;
+      })
+    });
   };
 
   chartHandler = async type => {
     if (type === 'fruit' && this.props.data !== null) {
-      listItems = {
-        fruits: {},
-        gender: {},
-        color: {}
-      };
+      this.clearListItemsHandler();
       await this.setState({ male: 0, female: 0, total: 0, labels: null });
       this.props.data.forEach(el => {
         if (!listItems.fruits[el.favoriteFruit]) {
@@ -78,28 +102,11 @@ class BarChart extends Component {
         return listItems.fruits[el];
       });
 
-      await this.setState({
-        colorChecked: false,
-        fruitChecked: true,
-        labels: Object.keys(listItems.fruits),
-        males: listItems.gender.map(el => {
-          return el.male;
-        }),
-        females: listItems.gender.map(el => {
-          return el.female;
-        }),
-        total: listItems.gender.map(el => {
-          return el.total;
-        })
-      });
+      await this.assignGraphValueHandler('fruits');
     }
 
     if (type === 'color' && this.props.data !== null) {
-      listItems = {
-        fruits: {},
-        gender: {},
-        color: {}
-      };
+      this.clearListItemsHandler();
       await this.setState({ male: 0, female: 0, total: 0, labels: null });
       this.props.data.forEach(el => {
         if (!listItems.color[el.favoriteColor]) {
@@ -113,25 +120,12 @@ class BarChart extends Component {
         return listItems.color[el];
       });
 
-      await this.setState({
-        colorChecked: true,
-        fruitChecked: false,
-        labels: Object.keys(listItems.color),
-        males: listItems.gender.map(el => {
-          return el.male;
-        }),
-        females: listItems.gender.map(el => {
-          return el.female;
-        }),
-        total: listItems.gender.map(el => {
-          return el.total;
-        })
-      });
+      await this.assignGraphValueHandler('color');
     }
-    this.test();
+    this.showChart();
   };
 
-  test = () => {
+  showChart = () => {
     const input = {
       labels: this.state.labels,
       datasets: [
@@ -171,7 +165,7 @@ class BarChart extends Component {
           height={20}
           className={classes.barChart}
           data={this.state.data}
-          options={this.state.options}
+          options={options}
         />
       </div>
     );

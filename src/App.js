@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Table from './Table/Table';
 import BarChart from './BarChart/BarChart';
 import classes from './App.module.scss';
-import SelectMenu from './BarChart/SelectMenu/SelectMenu';
+import SelectMenu from './SelectMenu/SelectMenu';
 
 const listItems = {
   fruits: {},
@@ -115,7 +115,12 @@ class App extends Component {
         </div>
         <div>
           <Table data={this.state.data} />
-          <BarChart data={this.state.data} />
+          <BarChart
+            data={this.state.data}
+            gender={this.state.genderSelection}
+            color={this.state.colorSelection}
+            fruits={this.state.fruitSelection}
+          />
         </div>
       </div>
     );

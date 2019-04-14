@@ -1,0 +1,14 @@
+
+
+To use the application, please read below points.
+
+
+Application automatically load all the data from JSON file to Table and chart. Table is vertical scrollable.
+
+By default, filter option is ‘select’ for all three category which means all 500 data is loaded.
+
+By default, color option is selected for the chart which shows co-relation between gender and colors.
+ 
+To change the chart to show the co-relation between gender and fruits, select ‘fruit’ radio button.
+
+To change the filter option, select the option from menu, then chart and table will get updated automatically
