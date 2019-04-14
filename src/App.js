@@ -60,112 +60,34 @@ class App extends Component {
     }
   };
 
+  filterGenderData = (data, genderInState) => {
+    if (genderInState === 'select') return data;
+    return data.filter(el => el.gender === genderInState);
+  };
+
+  filterColorData = (data, colorInState) => {
+    if (colorInState === 'select') return data;
+    return data.filter(el => el.favoriteColor === colorInState);
+  };
+  filterFruitData = (data, fruitInState) => {
+    if (fruitInState === 'select') return data;
+    return data.filter(el => el.favoriteFruit === fruitInState);
+  };
+
   applyHandler = () => {
-    if (
-      this.state.genderSelection !== 'select' &&
-      this.state.colorSelection !== 'select' &&
-      this.state.fruitSelection !== 'select'
-    ) {
-      this.setState({
-        data: this.state.initialData.filter(el => {
-          return (
-            el.gender === this.state.genderSelection &&
-            el.favoriteColor === this.state.colorSelection &&
-            el.favoriteFruit === this.state.fruitSelection
-          );
-        })
-      });
-    }
-
-    if (
-      this.state.genderSelection !== 'select' &&
-      this.state.colorSelection !== 'select' &&
-      this.state.fruitSelection === 'select'
-    ) {
-      this.setState({
-        data: this.state.initialData.filter(el => {
-          return (
-            el.gender === this.state.genderSelection &&
-            el.favoriteColor === this.state.colorSelection
-          );
-        })
-      });
-    }
-
-    if (
-      this.state.genderSelection !== 'select' &&
-      this.state.colorSelection === 'select' &&
-      this.state.fruitSelection !== 'select'
-    ) {
-      this.setState({
-        data: this.state.initialData.filter(el => {
-          return (
-            el.gender === this.state.genderSelection &&
-            el.favoriteFruit === this.state.fruitSelection
-          );
-        })
-      });
-    }
-
-    if (
-      this.state.genderSelection === 'select' &&
-      this.state.colorSelection !== 'select' &&
-      this.state.fruitSelection !== 'select'
-    ) {
-      this.setState({
-        data: this.state.initialData.filter(el => {
-          return (
-            el.favoriteColor === this.state.colorSelection &&
-            el.favoriteFruit === this.state.fruitSelection
-          );
-        })
-      });
-    }
-
-    if (
-      this.state.genderSelection !== 'select' &&
-      this.state.colorSelection === 'select' &&
-      this.state.fruitSelection === 'select'
-    ) {
-      this.setState({
-        data: this.state.initialData.filter(
-          el => el.gender === this.state.genderSelection
-        )
-      });
-    }
-
-    if (
-      this.state.genderSelection === 'select' &&
-      this.state.colorSelection === 'select' &&
-      this.state.fruitSelection !== 'select'
-    ) {
-      this.setState({
-        data: this.state.initialData.filter(
-          el => el.favoriteFruit === this.state.fruitSelection
-        )
-      });
-    }
-    if (
-      this.state.genderSelection === 'select' &&
-      this.state.colorSelection !== 'select' &&
-      this.state.fruitSelection === 'select'
-    ) {
-      this.setState({
-        data: this.state.initialData.filter(
-          el => el.favoriteColor === this.state.colorSelection
-        )
-      });
-    }
-
-    if (
-      this.state.genderSelection === 'select' &&
-      this.state.colorSelection === 'select' &&
-      this.state.fruitSelection === 'select'
-    ) {
-      this.setState({
-        data: this.state.initialData
-      });
-    }
+    const genderData = this.filterGenderData(
+      this.state.initialData,
+      this.state.genderSelection
+    );
+    const colorData = this.filterColorData(
+      genderData,
+      this.state.colorSelection
+    );
+    const fruitData = this.filterFruitData(
+      colorData,
+      this.state.fruitSelection
+    );
+    this.setState({ data: fruitData });
   };
 
   render() {
